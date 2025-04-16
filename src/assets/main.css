@@ -1,35 +1,33 @@
-@import './base.css';
+@import "tailwindcss";
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+/* @theme {
+  --color-custom-white: hsl(0, 0%, 100%);
+  --color-slate-100: hsl(202, 86%, 94%);
+  --color-slate-300: hsl(203, 41%, 72%);
+  --color-slate-500: hsl(200, 26%, 54%);
+  --color-slate-700: hsl(200, 24%, 40%);
+  --color-slate-900: hsl(202, 55%, 16%);
+} */
+body {
+  background-color: hsl(202, 86%, 94%);
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+.user-input {
+  /* border-color: hsl(0, 0%, 100%); */
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.accent-slate {
+  background-color: hsl(202, 86%, 94%);
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+.accent-slate:hover {
+  background-color: hsl(61, 70%, 52%);
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.custom-border:hover {
+  border-color: hsl(61, 70%, 52%);
+}
+
+.custom-border:focus {
+  border-color: hsl(61, 70%, 52%);
 }
