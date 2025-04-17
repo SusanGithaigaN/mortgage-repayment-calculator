@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import InputField from './InputField.vue';
-import RadioGroup from './RadioGroup.vue';
-import ResultDisplay from './ResultDisplay.vue';
+import InputField from "./InputField.vue";
+import RadioGroup from "./RadioGroup.vue";
+import ResultDisplay from "./ResultDisplay.vue";
+import RadioButton from "./RadioButton.vue";
 </script>
 
 <template>
@@ -14,7 +15,9 @@ import ResultDisplay from './ResultDisplay.vue';
             <p class="text-slate-900 font-bold text-base md:text-2xl whitespace-nowrap">
               Mortgage Calculator
             </p>
-            <p class="text-slate-500 underline underline-offset-4 drop-shadow-md font-semibold">
+            <p
+              class="text-slate-500 underline underline-offset-4 drop-shadow-md font-semibold"
+            >
               Clear All
             </p>
           </div>
@@ -28,7 +31,9 @@ import ResultDisplay from './ResultDisplay.vue';
               errorMessage="Please enter a valid amount"
             >
               <template #prefix>
-                <p class="inline-flex items-center py-3 px-4 accent-slate font-extrabold">€</p>
+                <p class="inline-flex items-center py-3 px-4 accent-slate font-extrabold">
+                  €
+                </p>
               </template>
             </InputField>
             <div class="flex flex-wrap -mx-3">
@@ -39,27 +44,31 @@ import ResultDisplay from './ResultDisplay.vue';
                 name="term"
                 errorId="term-error"
                 errorMessage="This field is required"
-                class="w-full md:w-1/2 px-3 "
+                value="years"
+                class="w-full md:w-1/2 px-3"
               />
               <InputField
                 label="Interest Rate"
-                id="mortgage-type"
+                id="mortgage-rate"
                 type="text"
-                name="mortgage-type"
-                errorId="mortgage-type-error"
+                name="mortgage-rate"
+                errorId="mortgage-rate-error"
                 errorMessage="This field is required"
+                value="%"
                 class="w-full md:w-1/2 px-3"
               />
             </div>
             <RadioGroup
               :options="[
                 { label: 'Repayment', value: 'repayment' },
-                { label: 'Interest Only', value: 'interest-only' }
+                { label: 'Interest Only', value: 'interest-only' },
               ]"
               name="mortgage-type"
               errorId="query-type-error"
               errorMessage="Please select a query type"
             />
+            <!-- Calculate Repayments -->
+            <RadioButton title="Calculate Repayments" />
           </form>
         </div>
         <!-- Column 2 -->
