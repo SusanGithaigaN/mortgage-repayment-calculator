@@ -2,9 +2,7 @@
 
 <template>
   <main>
-    <div
-      className="attributionflex flex-row justify-center  text-sm pt-12 pb-6"
-    >
+    <div className="attributionflex flex-row justify-center  text-sm pt-12 pb-6">
       Challenge by
       <a href="https://www.frontendmentor.io?ref=challenge" className="pl-1.5"
         >Frontend Mentor</a

@@ -1,8 +1,38 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import InputField from "./InputField.vue";
 import RadioGroup from "./RadioGroup.vue";
 import ResultDisplay from "./ResultDisplay.vue";
 import RadioButton from "./RadioButton.vue";
+
+// mortgage calculations
+const amount = ref("");
+const term = ref("");
+const interestRate = ref("");
+const mortgageType = ref("");
+const monthlyPayment = ref<number | null>(null);
+const totalPayment = ref<number | null>(null);
+
+function calculateRepayments() {
+  const P = parseFloat(amount.value);
+  const r = parseFloat(interestRate.value) / 100 / 12;
+  const n = parseInt(term.value) * 12;
+
+  if (!P || !r || !n) {
+    alert("Please enter valid mortgage details.");
+    return;
+  }
+
+  if (mortgageType.value === "repayment") {
+    const M = (P * (r * Math.pow(1 + r, n))) / (Math.pow(1 + r, n) - 1);
+    monthlyPayment.value = parseFloat(M.toFixed(2));
+    totalPayment.value = parseFloat((M * n).toFixed(2));
+  } else if (mortgageType.value === "interest-only") {
+    const M = P * r;
+    monthlyPayment.value = parseFloat(M.toFixed(2));
+    totalPayment.value = parseFloat((M * n + P).toFixed(2));
+  }
+}
 </script>
 
 <template>
@@ -23,6 +53,7 @@ import RadioButton from "./RadioButton.vue";
           </div>
           <form>
             <InputField
+              v-model="amount"
               label="Mortgage Amount"
               id="amount"
               type="text"
@@ -38,6 +69,7 @@ import RadioButton from "./RadioButton.vue";
             </InputField>
             <div class="flex flex-wrap -mx-3">
               <InputField
+                v-model="term"
                 label="Mortgage Term"
                 id="term"
                 type="text"
@@ -48,6 +80,7 @@ import RadioButton from "./RadioButton.vue";
                 class="w-full md:w-1/2 px-3"
               />
               <InputField
+                v-model="interestRate"
                 label="Interest Rate"
                 id="mortgage-rate"
                 type="text"
@@ -59,6 +92,7 @@ import RadioButton from "./RadioButton.vue";
               />
             </div>
             <RadioGroup
+              v-model="mortgageType"
               :options="[
                 { label: 'Repayment', value: 'repayment' },
                 { label: 'Interest Only', value: 'interest-only' },
@@ -68,14 +102,40 @@ import RadioButton from "./RadioButton.vue";
               errorMessage="Please select a query type"
             />
             <!-- Calculate Repayments -->
-            <RadioButton title="Calculate Repayments" />
+            <!-- <RadioButton title="Calculate Repayments" /> -->
+            <div
+              class="flex flex-row gap-2 rounded-full bg-[#d7da2f] py-2 px-8 w-fit hover:bg-[#e1e442]"
+            >
+              <img
+                class="img-fluid h-6"
+                alt="calculate"
+                src="../assets/images/icon-calculator.svg"
+              />
+              <button type="button" @click="calculateRepayments">
+                Calculate Repayments
+              </button>
+            </div>
           </form>
         </div>
         <!-- Column 2 -->
+
         <ResultDisplay
+          v-if="monthlyPayment === null && totalPayment === null"
           imageSrc="/src/assets/images/illustration-empty.svg"
           title="Results shown here"
           description="Complete the form and click 'calculate repayments' to see your monthly repayments."
+        />
+
+        <ResultDisplay
+          v-else
+          :title="`£${monthlyPayment!.toLocaleString(undefined, {
+    minimumFractionDigits: 2
+  })}`"
+          :description="`Total you'll repay over the term: £${totalPayment!.toLocaleString(
+    undefined,
+    { minimumFractionDigits: 2 }
+  )}`"
+          imageSrc="/src/assets/images/illustration-empty.svg"
         />
       </div>
     </div>

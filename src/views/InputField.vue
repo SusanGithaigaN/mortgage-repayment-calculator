@@ -1,7 +1,18 @@
 <script setup lang="ts">
-defineProps(["label", "id", "type", "name", "errorId", "errorMessage", "value"]);
+const props = defineProps<{
+  label: string;
+  id: string;
+  type: string;
+  name: string;
+  errorId: string;
+  errorMessage: string;
+  value?: string;
+  modelValue: string;
+}>();
 
-// validate user input typeof == number || decimal
+const emit = defineEmits(["update:modelValue"]);
+
+// Validate numeric input
 function validateNumberInput(event: Event) {
   const input = event.target as HTMLInputElement;
   const regex = /^\d*\.?\d*$/;
@@ -9,6 +20,7 @@ function validateNumberInput(event: Event) {
     input.value = input.value.replace(/[^0-9.]/g, "");
     input.value = input.value.replace(/(\..*?)\..*/g, "$1");
   }
+  emit("update:modelValue", input.value);
 }
 </script>
 
@@ -18,7 +30,7 @@ function validateNumberInput(event: Event) {
       {{ label }}
     </label>
     <div
-      class="flex items-center rounded-md border border-slate-400 focus:border-[#d7da2f]"
+      class="flex items-center rounded-md border border-slate-400 focus-within:border-[#d7da2f]"
     >
       <slot name="prefix"></slot>
       <div class="flex flex-row">
@@ -28,12 +40,13 @@ function validateNumberInput(event: Event) {
             :id="id"
             :type="type"
             :name="name"
+            :value="modelValue"
             @input="validateNumberInput"
           />
         </div>
         <div
-          class="flex justify-center items-center accent-slate font-semibold text-slate-700 px-4 m-0 leading-none p-0"
           v-if="value"
+          class="flex justify-center items-center accent-slate font-semibold text-slate-700 px-4"
         >
           {{ value }}
         </div>
@@ -44,5 +57,3 @@ function validateNumberInput(event: Event) {
     </span>
   </div>
 </template>
-
-<style scoped></style>

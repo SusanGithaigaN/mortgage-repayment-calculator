@@ -1,5 +1,17 @@
 <script setup lang="ts">
-defineProps(["options", "name", "errorId", "errorMessage"]);
+const props = defineProps<{
+  options: { label: string; value: string }[];
+  name: string;
+  errorId: string;
+  errorMessage: string;
+  modelValue: string;
+}>();
+
+const emit = defineEmits(["update:modelValue"]);
+
+function updateSelection(value: string) {
+  emit("update:modelValue", value);
+}
 </script>
 
 <template>
@@ -16,6 +28,8 @@ defineProps(["options", "name", "errorId", "errorMessage"]);
           :id="`radio-${index}`"
           :name="name"
           :value="option.value"
+          :checked="modelValue === option.value"
+          @change="updateSelection(option.value)"
         />
         <span
           :id="`label-${index}`"
