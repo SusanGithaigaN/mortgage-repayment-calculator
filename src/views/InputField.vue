@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useAttrs } from "vue";
+
 const props = defineProps<{
+  prefix: string;
   label: string;
   id: string;
   type: string;
@@ -12,7 +15,9 @@ const props = defineProps<{
 
 const emit = defineEmits(["update:modelValue"]);
 
-// Validate numeric input
+const attrs = useAttrs();
+
+// validate user input typeof == number || decimal
 function validateNumberInput(event: Event) {
   const input = event.target as HTMLInputElement;
   const regex = /^\d*\.?\d*$/;
@@ -29,31 +34,37 @@ function validateNumberInput(event: Event) {
     <label class="block tracking-wide text-base mb-2 text-slate-500" :for="id">
       {{ label }}
     </label>
+
     <div
-      class="flex items-center rounded-md border border-slate-400 focus-within:border-[#d7da2f]"
+      class="flex w-full border border-slate-400 rounded-md focus-within:border-[#d7da2f] overflow-hidden"
     >
-      <slot name="prefix"></slot>
-      <div class="flex flex-row">
-        <div class="input">
-          <input
-            class="appearance-none block w-full p-3 text-base leading-tight focus:outline-none"
-            :id="id"
-            :type="type"
-            :name="name"
-            :value="modelValue"
-            @input="validateNumberInput"
-          />
-        </div>
-        <div
-          v-if="value"
-          class="flex justify-center items-center accent-slate font-semibold text-slate-700 px-4"
-        >
-          {{ value }}
-        </div>
+      <div
+        v-if="prefix"
+        class="flex items-center px-4 accent-slate text-slate-700 font-semibold text-base"
+      >
+        {{ prefix }}
+      </div>
+      <input
+        v-bind="attrs"
+        class="flex-grow w-full p-3 text-base leading-tight focus:outline-none bg-white"
+        :id="id"
+        :type="type"
+        :name="name"
+        :value="modelValue"
+        @input="validateNumberInput"
+      />
+      <div
+        v-if="value"
+        class="flex items-center px-4 accent-slate text-slate-700 font-semibold text-base"
+      >
+        {{ value }}
       </div>
     </div>
+
     <span :id="errorId" class="text-[hsl(4, 69%, 50%)] hidden">
       {{ errorMessage }}
     </span>
   </div>
 </template>
+
+<style scoped></style>

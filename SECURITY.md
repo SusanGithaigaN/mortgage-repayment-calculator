@@ -20,7 +20,7 @@ If you've discovered a security vulnerability, please follow the instructions be
 
 ### Steps to Report a Vulnerability:
 
-1. **Submit an Issue**: Open an issue in our [GitHub Issue Tracker](<https://github.com/SusanGithaigaN/mortgage-repayment-calculator/issuesL>) to report the vulnerability.
+1. **Submit an Issue**: Open an issue in our [GitHub Issue Tracker](https://github.com/SusanGithaigaN/mortgage-repayment-calculator/issuesL) to report the vulnerability.
 2. **What to Include**: In your issue, please provide the following details:
    - A description of the vulnerability
    - Steps to reproduce the issue (if applicable)
@@ -32,6 +32,7 @@ If you've discovered a security vulnerability, please follow the instructions be
 6. **If Declined**: If the vulnerability report is not accepted (e.g., non-critical or not reproducible), the issue will be closed, and you'll be notified with the reasoning.
 
 ### Contact Information:
+
 - **Email for Security Reports**: [susangithaiga26@gmail.com]
 - **GitHub Issue Tracker**: [https://github.com/SusanGithaigaN/mortgage-repayment-calculator/issues]
 
